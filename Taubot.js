@@ -4,7 +4,7 @@ const fs = require('fs');
 let rawdata = fs.readFileSync('account.json');
 let options = JSON.parse(rawdata);
 
-let rawdata = fs.readFileSync('settings.json');
+fs.readFileSync('settings.json');
 let settings = JSON.parse(rawdata);
 
 const bot = mineflayer.createBot(options)
@@ -22,7 +22,7 @@ function wait(ms){
 */
 
 bot.on('entityHurt', (entity) => {
-  if (!settings["expfarm"]) break;
+  if (!settings["expfarm"]) return;
   wait(500);
   bot.attack(entity)
   if (entity.type == "mob") {
