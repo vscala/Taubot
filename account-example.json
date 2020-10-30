@@ -1,0 +1,6 @@
+{
+    "host": "server ip",
+    "port": 25565,
+    "username": "minecraft username",
+    "password": "password"
+}
