@@ -1,4 +1,5 @@
 const mineflayer = require('mineflayer')
+const mineflayerViewer = require('prismarine-viewer').mineflayer
 const fs = require('fs');
 
 let options = JSON.parse(fs.readFileSync('account.json'));
@@ -19,7 +20,14 @@ function save() {
     fs.writeFileSync('settings.json', JSON.stringify(settings));
     fs.writeFileSync('response.json', JSON.stringify(response));
 }
-
+/*
+    TODO commands:
+        toggle settings
+        print settings (verbose)
+        add new basicReponse
+        remove a basicResponse
+        print all responses
+*/
 function command(username, message) {
     return;
 }
@@ -36,6 +44,10 @@ function basicResponse(username, message) {
         health: log new health and food
 */
 
+
+bot.once('spawn', () => {
+  mineflayerViewer(bot, { port: 3007, firstPerson: true })
+})
 
 bot.on('chat', function (username, message) {
   if (username === bot.username) return;
