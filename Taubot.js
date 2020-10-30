@@ -4,6 +4,9 @@ const fs = require('fs');
 let rawdata = fs.readFileSync('account.json');
 let options = JSON.parse(rawdata);
 
+let rawdata = fs.readFileSync('settings.json');
+let settings = JSON.parse(rawdata);
+
 const bot = mineflayer.createBot(options)
 
 function wait(ms){
@@ -14,10 +17,12 @@ function wait(ms){
   }
 }
 
-/*bot.once('spawn', () => {
-})
+/*
+    TODO implement chat commands / logchat
+*/
 
 bot.on('entityHurt', (entity) => {
+  if (!settings["expfarm"]) break;
   wait(500);
   bot.attack(entity)
   if (entity.type == "mob") {
@@ -28,8 +33,8 @@ bot.on('entityHurt', (entity) => {
 bot.on('experience', () => {
     console.log("exp: ", bot.experience.level+bot.experience.progress);
 })
-*/
+
 bot.on("health", () => {
     console.log(bot.health, bot.food);
-    if (bot.health < 15) bot.quit('below 15hp');
+    if (bot.health < 15 && settings["autoleave"]) bot.quit('below 15hp');
 })
