@@ -1,11 +1,9 @@
 const mineflayer = require('mineflayer')
 const fs = require('fs');
 
-let rawdata = fs.readFileSync('account.json');
-let options = JSON.parse(rawdata);
-
-fs.readFileSync('settings.json');
-let settings = JSON.parse(rawdata);
+let options = JSON.parse(fs.readFileSync('account.json'));
+let settings = JSON.parse(fs.readFileSync('settings.json'));
+let response = JSON.parse(fs.readFileSync('response.json'));
 
 const bot = mineflayer.createBot(options)
 
@@ -17,15 +15,33 @@ function wait(ms){
   }
 }
 
+function save() {
+    fs.writeFileSync('settings.json', JSON.stringify(settings));
+    fs.writeFileSync('response.json', JSON.stringify(response));
+}
+
+function command(username, message) {
+    return;
+}
+
+function basicResponse(username, message) {
+  if (message.toLowerCase() in response) bot.chat(response[message.toLowerCase()]);
+}
+
 /*
-    TODO implement chat commands / logchat
+    Listeners:
+        chat: on chat log (if enabled) then check for command and response
+        entityHurt: attack hurt entity (if enabled)
+        experience: log new experience level
+        health: log new health and food
 */
 
 
 bot.on('chat', function (username, message) {
   if (username === bot.username) return;
-  
-  if (settings["logchat"]) console.log(username + ":", message)
+  if (settings["logchat"]) console.log(username + ":", message);
+  command(username, message);
+  basicResponse(username, message);
 })
 
 bot.on('entityHurt', (entity) => {
