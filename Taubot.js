@@ -21,6 +21,13 @@ function wait(ms){
     TODO implement chat commands / logchat
 */
 
+
+bot.on('chat', function (username, message) {
+  if (username === bot.username) return;
+  
+  if (settings["logchat"]) console.log(username + ":", message)
+})
+
 bot.on('entityHurt', (entity) => {
   if (!settings["expfarm"]) return;
   wait(500);
