@@ -1,5 +1,5 @@
 # Taubot
-A multi-purpose mineflayer bot
+Bot will automatically hit damaged mobs and output changes in health and experience
 
 ## How to use
 first install mineflayer
